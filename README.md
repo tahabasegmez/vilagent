@@ -8,6 +8,8 @@ It is a single app. The Electron window starts its own local Python gateway, ser
 UI from it, and shuts everything down when you close the window. Your keys, memory and run
 records stay on your machine.
 
+![A run in progress: the live run graph, with the plan on the left and model usage at the top](docs/screenshots/03-run-graph.png)
+
 ## How it works
 
 A **planner** model decides what to do. A **computer-use** model (FARA, a vision model) looks at
@@ -47,6 +49,13 @@ The UI is a full-screen live view of the run: each step, model call and vision a
 as a node as it happens, with its output, the model's reasoning and the memory it used. The
 plan sits beside it, and model usage counts up at the top.
 
+While the agent is acting, the run moves to a small always-on-top window so the agent can see
+your desktop rather than the app. A risky step stops and waits for your answer.
+
+| Mini window while the agent acts | A risky step waiting for approval |
+|---|---|
+| <img src="docs/screenshots/07-mini-hud.png" alt="The mini window: the current action, the step and the model's note, with a Stop button" width="300"> | <img src="docs/screenshots/04-approval.png" alt="An approval dialog asking whether to run a medium-risk step" width="520"> |
+
 - **Options** (right edge): the approach, execution mode, memory, recovery supervisor, step
   check and approval level.
 - **Settings**:
@@ -67,7 +76,6 @@ Connections:
   or Hugging Face for embeddings
 - that provider's own settings under their usual names (`model`, `base_url`, `api_key`,
   `temperature`, `max_tokens`, `timeout`, `max_retries`, …), with sensible defaults
-
 
 A run needs:
 - an **LLM** (or VLM) for the planner
@@ -117,4 +125,4 @@ once, blocks any further action and closes the managed browser.
 | `agent/` | The agent and the local gateway, in Python. See [agent/README.md](agent/README.md). |
 | `agent/evals/` | The live eval suite that measures whether a change helps. See [agent/evals/README.md](agent/evals/README.md). |
 | `desktop/` | The operator UI (a static Next.js export) and the Electron shell. See [desktop/README.md](desktop/README.md). |
-| `tools/` | A PowerShell memory inspector. |
+| `tools/` | A PowerShell memory inspector, and the script that takes the screenshots in `docs/screenshots/` from demo data. |
